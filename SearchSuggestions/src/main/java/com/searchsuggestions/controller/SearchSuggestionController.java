@@ -3,6 +3,9 @@ package com.searchsuggestions.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Digits;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
@@ -17,21 +20,19 @@ import com.searchsuggestions.service.CityDirectoryService;
 @RestController
 @RequestMapping("/search_directory")
 public class SearchSuggestionController {
-	
+
 	@Autowired
 	private CityDirectoryService cityDirectoryService;
-	
+
 	@GetMapping(value = "/suggest_cities", produces = MediaType.TEXT_PLAIN_VALUE)
-	public String searchSuggestedCities(@Validated @RequestParam(value = "start") String start, @Validated @RequestParam(value = "atmost") int atmost) {
-		
-		List<String> result = cityDirectoryService.findByDistrictStartWith(start.toLowerCase());
+	public String searchSuggestedCities(@Validated  @RequestParam(value = "start") String start,
+			@RequestParam(value = "atmost") /* @Valid @Digits(integer = 1, fraction = 0) */	int atmost) {
+		List<String> result = cityDirectoryService.findByDistrictStartWith(atmost, start.toLowerCase());
 		if (CollectionUtils.isEmpty(result)) {
 			return "No Result Found !";
 		}
-		return result.stream().collect(Collectors.joining(System.lineSeparator().trim()));
-		
+		return result.stream().collect(Collectors.joining(System.lineSeparator()));
+
 	}
-	
-	
-	
-	}
+
+}
