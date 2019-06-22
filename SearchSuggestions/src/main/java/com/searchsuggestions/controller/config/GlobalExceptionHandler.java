@@ -18,7 +18,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ExceptionHandler(MultipartException.class)
     public ResponseEntity<String> handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
+        redirectAttributes.addFlashAttribute("message", e.getMessage());
         return new ResponseEntity<>("Please upload only CSV format !", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
 
     }
@@ -33,20 +33,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		 
 		    ApiError apiError = new ApiError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, 
 		      ex.getLocalizedMessage(), builder.substring(0, builder.length() - 2));
-		    return new ResponseEntity<Object>(
+		    return new ResponseEntity<>(
 		      apiError, new HttpHeaders(), apiError.getStatus());
 	}
 	
 	@ExceptionHandler(BadRequest.class)
     public String handleError2(BadRequest e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
-        return "redirect:/BadRequest";
+        redirectAttributes.addFlashAttribute("message", e.getMessage());
+        return "BadRequest created !";
 
     }
 	
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String handleError3(MethodArgumentTypeMismatchException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
+        redirectAttributes.addFlashAttribute("message", e.getMessage());
         return "Please enter valid number !";
 
     }
