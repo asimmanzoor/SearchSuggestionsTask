@@ -18,7 +18,8 @@ public class CityDirectoryRepositoryImpl {
 		TypedQuery<String> q = entityManager.createQuery(
 				"select distinct LOWER(cd.district) from CityDirectory cd where LOWER(district) like :district", String.class);
 		q.setParameter("district", district + "%");
-
-		return q.setMaxResults(limit).getResultList();
+		q.setFirstResult(0);
+		q.setMaxResults(limit);
+		return q.getResultList();
 	}
 }

@@ -3,11 +3,10 @@ package com.searchsuggestions.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,14 +24,13 @@ public class SearchSuggestionController {
 	private CityDirectoryService cityDirectoryService;
 
 	@GetMapping(value = "/suggest_cities", produces = MediaType.TEXT_PLAIN_VALUE)
-	public String searchSuggestedCities(@Validated  @RequestParam(value = "start") String start,
-			@RequestParam(value = "atmost") /* @Valid @Digits(integer = 1, fraction = 0) */	int atmost) {
+	public ResponseEntity<String> searchSuggestedCities(@Validated  @RequestParam(value = "start") String start,
+			@RequestParam(value = "atmost", required = true, defaultValue = "1") 	int atmost) {
 		List<String> result = cityDirectoryService.findByDistrictStartWith(atmost, start.toLowerCase());
 		if (CollectionUtils.isEmpty(result)) {
-			return "No Result Found !";
+			return new ResponseEntity<>("No Result Found !", HttpStatus.NOT_FOUND);
 		}
-		return result.stream().collect(Collectors.joining(System.lineSeparator()));
-
+		return new ResponseEntity<>(result.stream().collect(Collectors.joining(System.lineSeparator())), HttpStatus.FOUND);
 	}
 
 }
