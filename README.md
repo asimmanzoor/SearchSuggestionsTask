@@ -20,11 +20,11 @@ From Project Root directory run below command(Maven should be installed on syste
 	* e.g http://localhost:8080/search_directory/suggest_cities?start=che&atmost=5
 	* Would result 'chennai' in reponse body 
 	* Additionally, http://localhost:8080/search_directory/suggest_cities?start=ch&atmost=5
-	* Would result below output:
-		*chamarajanagar
-		*chamba
-		*chamoli
-		*champawat
-		*champhai
+	* Would result below output: <br/>
+		*chamarajanagar<br/>
+		*chamba<br/>
+		*chamoli<br/>
+		*champawat<br/>
+		*champhai<br/>
 
 
