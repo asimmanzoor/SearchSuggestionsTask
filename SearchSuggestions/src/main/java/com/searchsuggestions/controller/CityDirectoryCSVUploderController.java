@@ -29,7 +29,7 @@ public class CityDirectoryCSVUploderController {
 	@Autowired
 	private FileDataUploadUtils fileUploadService;
 
-	@PostMapping(value = "/api/uploadfile", consumes= MediaType.MULTIPART_FORM_DATA_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/api/uploadfile", consumes= MediaType.MULTIPART_FORM_DATA_VALUE ,produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile uploadfile) throws HttpMediaTypeNotSupportedException {
 
 		if (uploadfile.isEmpty()) {
